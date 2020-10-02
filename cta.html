@@ -1,0 +1,211 @@
+<style>
+  .free-fixed {
+    position: fixed;
+    bottom: 0px;
+    right: 50%;
+    transform: translate(50%);
+  }
+  .free-cta-container {
+    display: flex;
+
+    background-color: #1c306b;
+    color: white;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+
+    width: calc(100% + 1px);
+    z-index: 100;
+  }
+  .free-cta-heading {
+    display: flex;
+    flex-direction: column;
+  }
+  .free-cta-button {
+    display: flex;
+
+    white-space: nowrap;
+  }
+
+  .free-cta-button > a {
+    text-decoration: none;
+  }
+  .free-cta-button > a > button {
+    background-color: #198b8e;
+    color: white;
+    padding: 15px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: auto;
+    font-family: "Whitney-Medium";
+  }
+
+  .free-cta-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  .free-cta-close > i {
+    cursor: pointer;
+  }
+  .fixed-free {
+    height: 20px;
+  }
+  .free-absolute {
+    position: relative;
+  }
+  .isClosed {
+    display: none;
+  }
+
+  @media all and (max-width: 1450px) {
+    .free-cta-heading > h6 {
+      font-size: 20px !important;
+    }
+    .free-cta-heading > p {
+      font-size: 14px !important;
+    }
+    .free-cta-button > a > button {
+      font-size: 14px !important;
+    }
+    .free-cta-close > i {
+      font-size: 20px;
+      padding: 10px 15px;
+    }
+    .free-cta-close {
+      right: 5px;
+      top: 5px;
+    }
+    .bmB0 {
+      width: 750px;
+    }
+  }
+  @media all and (max-width: 1450px) and (max-width: 1300px) {
+    /* .free-cta-heading > h6 {
+        font-size: 18px !important;
+      }
+      .free-cta-heading > p {
+        font-size: 12px !important;
+      }
+      .free-cta-button > a > button {
+        font-size: 14px !important;
+       
+       
+      } */
+  }
+
+  @media all and (max-width: 1450px) and (max-width: 1300px) and (max-width: 750px) {
+    .free-cta-container {
+      flex-direction: column;
+      padding: 20px !important;
+    }
+    .free-cta-button > a > button {
+      margin-top: 10px;
+      font-size: 13px !important;
+      padding: 10px 15px;
+    }
+    .bmB0 {
+      width: 100%;
+    }
+  }
+</style>
+<body>
+  <div id="myDIVFREECTA" class="free-cta-container free-fixed">
+    <div id="freeHeading" class="free-cta-heading">
+      <h6 style="margin: 0px; font-size: 25px; font-family: 'Whitney-Bold'">
+        Subscribe to Intelligence Over News
+      </h6>
+      <p
+        style="
+          margin: 0px;
+          font-size: 16px;
+          margin-top: 10px;
+          color: white;
+
+          font-family: 'Whitney-Thin';
+        "
+      >
+        Independent Strategic Analysis | Objective Geopolitical Insights
+      </p>
+    </div>
+
+    <div class="free-cta-button">
+      <a
+        target="_blank"
+        href="https://lp.stratfor.com/subscribe_worldview?utm_source=website&utm_medium=button&utm_campaign=teaserblock&utm_content=subscribe"
+      >
+        <button>Become a Worldview member today</button>
+      </a>
+    </div>
+    <div id="closeCTAButton" class="free-cta-close isClosed">
+      <i onclick="closeCta()" class="fa fa-times-circle" aria-hidden="true"></i>
+    </div>
+  </div>
+  <div id="fixedFree" class="fixed-free"></div>
+
+  <script>
+    var isClosed = true;
+
+    function closeCta() {
+      var element = document.getElementById("myDIVFREECTA");
+      var closebutton = document.getElementById("closeCTAButton");
+      element.classList.remove("free-fixed");
+      element.classList.add("free-absolute");
+      closebutton.classList.add("isClosed");
+      isClosed = false;
+    }
+    setTimeout(function () {
+      const closeButton = document.getElementById("closeCTAButton");
+      closeButton.classList.remove("isClosed");
+      const box = document.getElementById("fixedFree");
+      const bounding = box.getBoundingClientRect();
+      var element = document.getElementById("myDIVFREECTA");
+      var closebutton = document.getElementById("closeCTAButton");
+
+      if (isClosed) {
+        function isInViewport(el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.bottom > 15) {
+            return (
+              rect.top >= 0 &&
+              rect.left >= 0 &&
+              rect.bottom <=
+                (window.innerHeight || document.documentElement.clientHeight) &&
+              rect.right <=
+                (window.innerWidth || document.documentElement.clientWidth)
+            );
+          } else {
+            return true;
+          }
+        }
+
+        document.addEventListener(
+          "scroll",
+          function () {
+            if (isInViewport(box)) {
+              element.classList.remove("free-fixed");
+              element.classList.add("free-absolute");
+              closebutton.classList.add("isClosed");
+            } else {
+              if (isClosed) {
+                element.classList.add("free-fixed");
+                element.classList.remove("free-absolute");
+                closeButton.classList.remove("isClosed");
+              } else {
+                null;
+              }
+            }
+          },
+
+          { passive: true }
+        );
+      } else {
+        null;
+      }
+    }, 4000);
+  </script>
+</body>
